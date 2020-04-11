@@ -18,9 +18,12 @@ class LoginComponent extends Component {
     this.state = {
       username: 'in25seconds',
       password: '',
+      hasLoginFailed: false,
+      showSuccessMessage: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.loginClicked = this.loginClicked.bind(this);
   }
 
   handleChange(event) {
@@ -31,15 +34,33 @@ class LoginComponent extends Component {
     });
   }
 
+  loginClicked() {
+    this.setState({
+      hasLoginFailed: true,
+      showSuccessMessage: true,
+    });
+  }
+
   render() {
     return (
       <>
+        { this.state.hasLoginFailed && <ShowInvalidCredentialMessage /> }
+        { this.state.showSuccessMessage && <ShowLoginSuccessMessage /> }
         User Name: <input type="text" name="username" value={ this.state.username } onChange={ this.handleChange } />
         Password: <input type="password" name="password" value={ this.state.password } onChange={ this.handleChange } />
-        <button>Login</button>
+        <button onClick={ this.loginClicked }>Login</button>
       </>
     );
   }
+
+}
+
+function ShowInvalidCredentialMessage() {
+  return <div>Invalid Credentials</div>;
+}
+
+function ShowLoginSuccessMessage() {
+  return <div>Login succesful</div>;
 }
 
 export default TodoApp;
