@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import AuthenticatedRoute from './AuthenticatednRoute';
+import ErrorComponent from './ErrorComponent';
+import FooterComponent from './FooterComponent';
+import HeaderComponent from './HeaderComponent';
+import ListTodosComponent from './ListTodosComponent';
 import LoginComponent from './LoginComponent';
 import LogoutComponent from './LogoutComponent';
-import HeaderComponent from './HeaderComponent';
-import FooterComponent from './FooterComponent';
 import WelcomeComponent from './WelcomeComponent';
-import ErrorComponent from './ErrorComponent';
-import ListTodosComponent from './ListTodosComponent';
-import AuthenticatedRoute from './AuthenticatednRoute';
 
 
 class TodoApp extends Component {
