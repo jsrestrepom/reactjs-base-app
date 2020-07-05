@@ -9,11 +9,19 @@ class ListTodosComponent extends Component {
     super(props);
 
     this.state = {
-      todos: []
+      todos: [],
+      message: null
     };
+
+    this.refreshTodos = this.refreshTodos.bind(this);
+    this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
   }
 
   componentDidMount() {
+    this.refreshTodos();
+  }
+
+  refreshTodos() {
     let username = AuthenticationService.getLoggedInUsername();
     TodoDataService.retrieveAllTodos(username)
       .then(response => {
@@ -24,10 +32,20 @@ class ListTodosComponent extends Component {
       });
   }
 
+  deleteTodoClicked(id) {
+    let username = AuthenticationService.getLoggedInUsername();
+    TodoDataService.deleteTodo(username, id)
+      .then(response => {
+        this.setState({ message: `Delete of todo ${id} successful.` });
+        this.refreshTodos();
+      })
+  }
+
   render() {
     return (
       <div>
         <h1>List Todos</h1>
+        { this.state.message && <div className="alert alert-success">{ this.state.message }</div> }
         <div className="container">
           <table className="table">
             <thead>
@@ -35,6 +53,7 @@ class ListTodosComponent extends Component {
                 <th>Description</th>
                 <th>Is Completed?</th>
                 <th>Target Date</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -44,6 +63,7 @@ class ListTodosComponent extends Component {
                     <td>{ todo.description }</td>
                     <td>{ todo.done.toString() }</td>
                     <td>{ todo.targetDate.toString() }</td>
+                    <td><button className="btn btn-warning" onClick={ () => this.deleteTodoClicked(todo.id) }>delete</button></td>
                   </tr>
                 );
               }) }
