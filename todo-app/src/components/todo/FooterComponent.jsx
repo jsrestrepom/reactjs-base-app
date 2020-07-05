@@ -25,10 +25,13 @@ class FooterComponent extends Component {
     });
   }
 
-  render() {
+  componentDidMount() {
     AppService.executeHealthCheckService()
       .then(response => this.handleSuccessfulRespone(response))
       .catch(error => this.handleFailedRespone(error));
+  }
+
+  render() {
     return (
       <footer className="footer">
         <span className="text-muted">Build it by @jsrestrepomoncada</span>
